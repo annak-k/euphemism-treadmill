@@ -1,0 +1,27 @@
+word	preceding contexts	following contexts	POS
+breast	"his, her, their, my, your, the"		NOUN
+crippled		"person, people, man, men, woman, women, child, children"	ADJ
+handicapped		"person, people, man, men, woman, women, child, children"	ADJ
+prostitute			NOUN
+alcoholic			NOUN
+drunkard			NOUN
+death			NOUN
+poverty			NOUN
+incest			NOUN
+failure			NOUN
+homosexual			ADJ
+depression			NOUN
+kill			VERB
+murder			VERB
+insanity			NOUN
+asylum			NOUN
+runaway			NOUN
+homeless			ADJ
+penis			NOUN
+vagina			NOUN
+buttocks			NOUN
+syphilis			NOUN
+gonorrhea			NOUN
+fart			NOUN
+died			VERB
+disease			NOUN

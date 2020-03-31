@@ -29,7 +29,7 @@ def main():
     taboos = load_taboos()
 
     years = range(1900, 2000, 10) # HistWords range 1800-1990
-    freqs = load_frequencies(years)
+    freqs = load_frequencies()
 
     with open("word_lists.pkl", "rb") as word_file:
         words = dict(pickle.load(word_file))
@@ -45,7 +45,7 @@ def main():
         time_series = pd.DataFrame(time_series_list)
         sns.lineplot(x="year", y="frequency", data=time_series, hue="word")
         plt.title("Tracking {}'s euphemism frequencies".format(taboo["word"]))
-        plt.savefig("frequency {}.png".format(taboo["word"]))
+        plt.savefig("plots\\frequency {}.png".format(taboo["word"]))
         plt.close()
 
 if __name__ == "__main__":

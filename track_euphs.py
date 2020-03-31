@@ -95,7 +95,7 @@ def main():
         time_series = pd.DataFrame(time_series_list)
         sns.lineplot(x="year", y="polarity", data=time_series, hue="word")
         plt.title("Tracking {}'s euphemisms".format(taboo["word"]))
-        plt.savefig("track {}.png".format(taboo["word"]))
+        plt.savefig("plots\\track {}.png".format(taboo["word"]))
         plt.close()
 
         word_lists[taboo["word"]] = query_words

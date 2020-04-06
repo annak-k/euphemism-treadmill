@@ -45,7 +45,7 @@ def main():
         time_series = pd.DataFrame(time_series_list)
         sns.lineplot(x="year", y="frequency", data=time_series, hue="word")
         plt.title("Tracking {}'s euphemism frequencies".format(taboo["word"]))
-        plt.savefig("plots\\frequency {}.png".format(taboo["word"]))
+        plt.savefig("plots\\frequency-{}.eps".format(taboo["word"]), dpi=300)
         plt.close()
 
 if __name__ == "__main__":

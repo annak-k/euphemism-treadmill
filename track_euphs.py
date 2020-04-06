@@ -67,6 +67,7 @@ def main():
     pos_emb = np.mean([e[years[-1]][v[years[-1]].index(w)] for w in pos_words], axis=0).reshape(1, -1)
     neg_emb = np.mean([e[years[-1]][v[years[-1]].index(w)] for w in neg_words], axis=0).reshape(1, -1)
 
+    first_last_polarity = {} # keep track of the first and last polarity measure for each word
     word_lists = {} # keep track of all the words
     for _, taboo in taboos.iterrows():
         time_series_list = []
@@ -81,6 +82,9 @@ def main():
 
                 time_series_list.append({"word": qword, "year": year, "polarity": pos_similarity - neg_similarity})
 
+                if qword in first_last_polarity and year == 1990:
+                    first_last_polarity[qword][1] = first_last_polarity[qword][0] - (pos_similarity - neg_similarity)
+
             nearest_neighbours = get_constrained_nearest_neighbours(taboo["word"], taboo["POS"], e[year], v[year], pos[year])
             nearest_neighbour_embeddings = e[year][nearest_neighbours]
 
@@ -91,12 +95,23 @@ def main():
 
             if v[year][nearest_neighbours[new_euphemism]] not in query_words:
                 query_words.append(v[year][nearest_neighbours[new_euphemism]])
+
+                first_last_polarity[v[year][nearest_neighbours[new_euphemism]]] = [pos_similarity - neg_similarity,0]
         
-        time_series = pd.DataFrame(time_series_list)
-        sns.lineplot(x="year", y="polarity", data=time_series, hue="word")
-        plt.title("Tracking {}'s euphemisms".format(taboo["word"]))
-        plt.savefig("plots\\track {}.png".format(taboo["word"]))
-        plt.close()
+        # print all words whose first polarity is larger than their last
+        for w in query_words[1:]:
+            if w in first_last_polarity:
+                if first_last_polarity[w][0] > first_last_polarity[w][1]:
+                    print(w)
+
+        try:
+            time_series = pd.DataFrame(time_series_list)
+            sns.lineplot(x="year", y="polarity", data=time_series, hue="word")
+            plt.title("Tracking {}'s euphemisms".format(taboo["word"]))
+            plt.savefig("plots\\track-{}.eps".format(taboo["word"]), dpi=300)
+            plt.close()
+        except ValueError as err:
+            print(err)
 
         word_lists[taboo["word"]] = query_words
 
